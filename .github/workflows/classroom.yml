@@ -97,6 +97,16 @@ jobs:
           | grep -q "Year: 2" && ./main | grep -q "Major: Informatics"'
         timeout: 10
         max-score: 5
+    - name: Student Inherit Person
+      id: student-inherit-person
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Student Inherit Person
+        setup-command: g++ -std=c++11 -o main main.cpp
+        command: grep -qE "class\s+Student\s*:\s*(public|protected|private)\s+Person"
+          "Student.h" && echo "5.00" || echo "0.00"
+        timeout: 10
+        max-score: 5
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
@@ -108,5 +118,6 @@ jobs:
         COURSE-DISPLAY_RESULTS: "${{steps.course-display.outputs.result}}"
         INSTRUCTOR-DISPLAY_RESULTS: "${{steps.instructor-display.outputs.result}}"
         STUDENT-DISPLAY_RESULTS: "${{steps.student-display.outputs.result}}"
+        STUDENT-INHERIT-PERSON_RESULTS: "${{steps.student-inherit-person.outputs.result}}"
       with:
-        runners: implementation-file-check,private-members-check,all-classes-declared,constructor-declaration,destructor-declaration,course-display,instructor-display,student-display
+        runners: implementation-file-check,private-members-check,all-classes-declared,constructor-declaration,destructor-declaration,course-display,instructor-display,student-display,student-inherit-person
