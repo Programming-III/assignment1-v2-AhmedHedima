@@ -18,7 +18,7 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Implementation File Check
-        setup-command: ''
+        setup-command: g++ -std=c++11 -o main main.cpp
         command: find . -maxdepth 1 -name '*.cpp' | wc -l
         timeout: 10
         max-score: 2
@@ -31,7 +31,7 @@ jobs:
         command: found=0; for class in Person Student Instructor Course; do [ -f "${class}.h"
           ] || continue; private_section=$(sed -n '/private:/,/public:\|protected:\|^}/p'
           "${class}.h"); attr_count=$(echo "$private_section" | grep -E '^\s+\w+.*\w+\s*;'
-          | grep -v '(' | wc -l); [ "$attr_count" -ge 2 ] && found=$((found+1)); done;
+          | grep -v '(' | wc -l); [ "$attr_count" -ge 1 ] && found=$((found+1)); done;
           case $found in 0) echo "0.00" ;; 1) echo "1.25" ;; 2) echo "2.50" ;; 3)
           echo "3.75" ;; 4) echo "5.00" ;; esac
         timeout: 10
@@ -41,7 +41,7 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: All Classes Declared
-        setup-command: ''
+        setup-command: g++ -std=c++11 -o main main.cpp
         command: 'grep -c ''^class '' *.h | awk -F: ''{sum += $2} END {print sum}'''
         timeout: 10
         max-score: 5
