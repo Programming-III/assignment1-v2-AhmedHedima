@@ -27,7 +27,7 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Private Members Check
-        setup-command: ''
+        setup-command: g++ -std=c++11 -o main main.cpp
         command: score="10.00"; for file in *.h 2>/dev/null; do [ -f "$file" ] ||
           continue; private_section=$(sed -n '/private:/,/public:\|protected:\|^}/p'
           "$file"); attr_count=$(echo "$private_section" | grep -E '^\s+\w+.*\w+\s*;'
