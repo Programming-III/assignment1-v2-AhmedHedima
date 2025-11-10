@@ -51,7 +51,7 @@ jobs:
         test-name: Constructor Declaration
         setup-command: g++ -std=c++11 -o main main.cpp
         command: found=0; for class in Person Student Instructor Course; do [ -f "${class}.h"
-          ] && [ -s "${class}.h" ] && grep -q "${class}(" "${class}.h" && found=$((found+1));
+          ] && [ -s "${class}.h" ] && grep -qE "${class}\s*\(" "${class}.h" && found=$((found+1));
           done; case $found in 0) echo "0.00" ;; 1) echo "1.25" ;; 2) echo "2.50"
           ;; 3) echo "3.75" ;; 4) echo "5.00" ;; esac
         timeout: 10
